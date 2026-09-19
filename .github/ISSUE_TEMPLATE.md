@@ -1,0 +1,86 @@
+name: issueテンプレート
+description: issueテンプレート
+labels: "運用"
+projects: "ユーザー名/projectナンバー" # https://github.com/users/ysk91/projects/4の場合、"ysk91/4"
+body:
+  - type: markdown
+    attributes:
+      value: | # ここの値は作成後のissueに記載されない
+        チケット作成にご協力いただきありがとうございます！
+        右側のlabelsから該当のものを選択してください。
+        スケジュールはissue作成後に設定することができます。
+  - type: textarea
+    id: require
+    attributes:
+      label: 要件
+      description: 要件を記載してください。資料のURLも添付可能です。
+      placeholder: マークダウン記法で入力可能です。
+    validations:
+      required: true
+  - type: textarea
+    id: conversation
+    attributes:
+      label: 会話履歴
+      description: Slack等の会話履歴を記入してください
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: |
+        # これ以降はチケット作成後に記載する内容です
+  - type: textarea
+    id: mermaid
+    attributes:
+      label: スケジュール
+      description: スケジュール確認要
+      value: | # タスク単位のガントチャートをマーメイド記法で書くことも可能です
+        <!-- 要件の開始日、テストレビュー日、各項目の工数を記入する -->
+
+        ```mermaid
+        gantt
+            title プロジェクト
+            dateFormat  YYYY-MM-DD
+            excludes    weekends
+
+            section 社内
+                要件 :active, a1, 2024-10-10, 10d
+                要件Fix : milestone, m1, after a1, 0d
+                開発 :active, a2, after a1, 10d
+                テストレビュー : milestone, m2, 2024-10-27, 0d
+                QA :a3, after a2, 5d
+            section 社外
+                UAT :active, b1, after a3, 10d
+            section リリース
+                リリース : milestone, m3, after b1, 1d
+        ```
+  - type: textarea
+    id: tasks
+    attributes:
+      label: 進捗
+      description: 進捗確認用
+      value: | # issueにtaskの進捗度合いが表示されるようになります
+        - [ ] 要件
+        - [ ] 要件fix
+        - [ ] 開発
+        - [ ] テストレビュー
+        - [ ] QA
+        - [ ] UAT
+        - [ ] リリース
+        - [ ] 先方確認
+  - type: textarea
+    id: qa
+    attributes:
+      label: QA
+      value: テスト仕様書のリンクを貼って下さい
+    validations:
+      required: false
+  - type: textarea
+    id: man-hours
+    attributes:
+      label: 工数
+      value: |
+        - PM
+        - エンジニア
+        - QA
+    validations:
+      required: false
